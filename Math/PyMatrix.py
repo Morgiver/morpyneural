@@ -34,3 +34,13 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 self.values[i, j] = random.uniform(a, b)
+
+    def scale_add(self, value):
+        """
+        Add a value to all values
+        :param value:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] += value
