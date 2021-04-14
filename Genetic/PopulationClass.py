@@ -1,4 +1,5 @@
 from Genetic.ElementClass import Element
+from Math.PyMatrix import Py2DMatrix
 
 
 class Population:
@@ -16,3 +17,17 @@ class Population:
         for i in range(max_elements):
             new_element = Element().build(layers_configuration)
             self.elements.append(new_element)
+
+    def feed_forward(self, inputs):
+        """
+        Feed forwarding all Elements
+        :param inputs:
+        :return:
+        """
+        inputs = Py2DMatrix(1, 1).from_array(inputs)
+
+        results = []
+        for element in self.elements:
+            results.append(element.feed_forward(inputs))
+
+        return results
