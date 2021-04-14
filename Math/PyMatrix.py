@@ -91,3 +91,17 @@ class Py2DMatrix:
                     new_matrix.values[i, j] += self.values[i, k] * matrix.values[k, j]
 
         return new_matrix
+
+    def transpose(self):
+        """
+        Transposing the matrix values in a new Py2DMatrix
+        :return:
+        """
+        new_matrix = Py2DMatrix(self.cols, self.rows)
+        new_matrix.build()
+
+        for i in range(new_matrix.rows):
+            for j in range(new_matrix.cols):
+                new_matrix.values[i, j] = self.values[j, i]
+
+        return new_matrix
