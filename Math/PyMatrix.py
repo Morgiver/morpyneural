@@ -137,3 +137,17 @@ class Py2DMatrix:
                     new_matrix.values[i, j] = matrix.values[i, j]
 
         return new_matrix
+
+    def mutation(self, rate=0.001, a=0, b=1):
+        """
+        For every values, will mutate it if the random value is smaller than the rate.
+        The new value will be a random between a and b.
+        :param rate:
+        :param a:
+        :param b:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if random.random() <= rate:
+                    self.values[i, j] = random.uniform(a, b)
