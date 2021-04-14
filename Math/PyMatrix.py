@@ -32,6 +32,8 @@ class Py2DMatrix:
 
         self.values = np.array(matrix, dtype=dtype)
 
+        return self
+
     def randomize(self, a=0, b=1):
         """
         Randomize all values between the two value a and b
@@ -43,6 +45,8 @@ class Py2DMatrix:
             for j in range(self.cols):
                 self.values[i, j] = random.uniform(a, b)
 
+        return self
+
     def scale_add(self, value):
         """
         Add a value to all values
@@ -52,6 +56,8 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 self.values[i, j] += value
+
+        return self
 
     def scale_multiply(self, value):
         """
@@ -63,6 +69,8 @@ class Py2DMatrix:
             for j in range(self.cols):
                 self.values[i, j] *= value
 
+        return self
+
     def ew_add(self, matrix):
         """
         Element wise Adding operation with an other matrix
@@ -73,6 +81,8 @@ class Py2DMatrix:
             for j in range(self.cols):
                 self.values[i, j] = self.values[i, j] + matrix.values[i, j]
 
+        return self
+
     def ew_multiply(self, matrix):
         """
         Element wise Multiply operation with an other matrix
@@ -82,6 +92,8 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 self.values[i, j] = self.values[i, j] * matrix.values[i, j]
+
+        return self
 
     def dot_product(self, matrix):
         """
@@ -127,6 +139,8 @@ class Py2DMatrix:
         for i in range(len(array_values)):
             self.values[i, 0] = array_values[i]
 
+        return self
+
     def crossover(self, matrix):
         """
         Create a new Py2DMatrix by crossovering the actual matrix with an other.
@@ -160,6 +174,8 @@ class Py2DMatrix:
                 if random.random() <= rate:
                     self.values[i, j] = random.uniform(a, b)
 
+        return self
+
     def activate(self, fn_name):
         """
         Pass every values in an Activation Function
@@ -174,3 +190,5 @@ class Py2DMatrix:
                     self.values[i, j] = sigmoid(self.values[i, j])
                 else:
                     self.values[i, j] = relu(self.values[i, j])
+
+        return self
