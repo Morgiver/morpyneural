@@ -159,3 +159,18 @@ class Py2DMatrix:
             for j in range(self.cols):
                 if random.random() <= rate:
                     self.values[i, j] = random.uniform(a, b)
+
+    def activate(self, fn_name):
+        """
+        Pass every values in an Activation Function
+        :param fn_name:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if fn_name == "relu":
+                    self.values[i, j] = relu(self.values[i, j])
+                elif fn_name == "sigmoid":
+                    self.values[i, j] = sigmoid(self.values[i, j])
+                else:
+                    self.values[i, j] = relu(self.values[i, j])
