@@ -63,7 +63,7 @@ class Py2DMatrix:
         """
         for i in range(self.rows):
             for j in range(self.cols):
-                self.values[i, j] = self.values[i, j] + matrix[i, j]
+                self.values[i, j] = self.values[i, j] + matrix.values[i, j]
 
     def ew_multiply(self, matrix):
         """
@@ -73,4 +73,21 @@ class Py2DMatrix:
         """
         for i in range(self.rows):
             for j in range(self.cols):
-                self.values[i, j] = self.values[i, j] * matrix[i, j]
+                self.values[i, j] = self.values[i, j] * matrix.values[i, j]
+
+    def dot_product(self, matrix):
+        """
+        Dot product between local values and an other matrix.
+        Return a new Py2DMatrix
+        :param matrix:
+        :return:
+        """
+        new_matrix = Py2DMatrix(self.rows, matrix.cols)
+        new_matrix.build()
+
+        for i in range(new_matrix.cols):
+            for j in range(new_matrix.cols):
+                for k in range(self.cols):
+                    new_matrix.values[i, j] += self.values[i, k] * matrix.values[k, j]
+
+        return new_matrix
