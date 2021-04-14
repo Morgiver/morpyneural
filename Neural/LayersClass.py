@@ -1,5 +1,6 @@
 from Math.PyMatrix import Py2DMatrix
 
+
 class Layer:
     def __init__(self):
         """
@@ -27,3 +28,11 @@ class Layer:
         self.activation = activation
 
         return self
+
+    def feed_forward(self, inputs):
+        """
+        Feed Forwarding inputs into Weights, Biases and Activation function
+        :param inputs:
+        :return:
+        """
+        return self.weights.dot_product(inputs).ew_add(self.biases).activate(self.activation)
