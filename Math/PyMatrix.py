@@ -44,3 +44,13 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 self.values[i, j] += value
+
+    def scale_multiply(self, value):
+        """
+        Multiply all values with a given value
+        :param value:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] *= value
