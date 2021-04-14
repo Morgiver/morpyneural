@@ -64,3 +64,13 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 self.values[i, j] = self.values[i, j] + matrix[i, j]
+
+    def ew_multiply(self, matrix):
+        """
+        Element wise Multiply operation with an other matrix
+        :param matrix:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] = self.values[i, j] * matrix[i, j]
