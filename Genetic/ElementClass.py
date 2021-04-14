@@ -18,6 +18,14 @@ class Element:
         """
         self.neural_network.build(layers_configuration)
 
+    def feed_forward(self, inputs):
+        """
+        Feed forward inputs to the neural network
+        :param inputs:
+        :return:
+        """
+        return self.neural_network.feed_forward(inputs)
+
     def evolve(self, parent_a, parent_b, learning_rate=0.001):
         """
         Evolve the neural network
