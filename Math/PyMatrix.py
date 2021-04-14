@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class Py2DMatrix:
@@ -22,3 +23,14 @@ class Py2DMatrix:
             matrix.append(cols_array)
 
         self.values = np.array(matrix, dtype=dtype)
+
+    def randomize(self, a=0, b=1):
+        """
+        Randomize all values between the two value a and b
+        :param a:
+        :param b:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] = random.uniform(a, b)
