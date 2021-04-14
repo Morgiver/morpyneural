@@ -17,3 +17,17 @@ class Element:
         :return:
         """
         self.neural_network.build(layers_configuration)
+
+    def evolve(self, parent_a, parent_b, learning_rate=0.001):
+        """
+        Evolve the neural network
+        :param parent_a:
+        :param parent_b:
+        :param learning_rate:
+        :return:
+        """
+        self.neural_network.evolve(
+            parent_a.neural_network,
+            parent_b.neural_network,
+            learning_rate=learning_rate
+        )
