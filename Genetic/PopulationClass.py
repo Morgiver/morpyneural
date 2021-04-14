@@ -31,3 +31,15 @@ class Population:
             results.append(element.feed_forward(inputs))
 
         return results
+
+    def evolve(self, parent_a, parent_b, learning_rate=0.001):
+        """
+        Evolve each Element
+        :param parent_a:
+        :param parent_b:
+        :param learning_rate:
+        :return:
+        """
+        for element in self.elements:
+            if element != parent_a and element != parent_b:
+                element.evolve(parent_a, parent_b, learning_rate=learning_rate)
