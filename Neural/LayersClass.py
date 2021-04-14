@@ -18,14 +18,10 @@ class Layer:
         :return:
         """
         # Weights PyD2Matrix
-        self.weights = Py2DMatrix(nodes, inputs)
-        self.weights.build()
-        self.weights.randomize(-1, 1)
+        self.weights = Py2DMatrix(nodes, inputs).build().randomize(-1, 1)
 
         # Biases PyD2Matrix
-        self.biases = Py2DMatrix(nodes, 1)
-        self.biases.build()
-        self.biases.randomize(-1, 1)
+        self.biases = Py2DMatrix(nodes, 1).build().randomize(-1, 1)
 
         # Set Activation
         self.activation = activation
