@@ -118,3 +118,22 @@ class Py2DMatrix:
 
         for i in range(len(array_values)):
             self.values[i, 0] = array_values[i]
+
+    def crossover(self, matrix):
+        """
+        Create a new Py2DMatrix by crossovering the actual matrix with an other.
+        For every values, there's 50/50 chances between the two matrices
+        :param matrix:
+        :return:
+        """
+        new_matrix = Py2DMatrix(self.rows, self.cols)
+        new_matrix.build()
+
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if random.random() <= 0.5:
+                    new_matrix.values[i, j] = self.values[i, j]
+                else:
+                    new_matrix.values[i, j] = matrix.values[i, j]
+
+        return new_matrix
