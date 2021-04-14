@@ -17,6 +17,7 @@ class Element:
         :return:
         """
         self.neural_network.build(layers_configuration)
+        return self
 
     def feed_forward(self, inputs):
         """
@@ -39,3 +40,5 @@ class Element:
             parent_b.neural_network,
             learning_rate=learning_rate
         )
+
+        return self
