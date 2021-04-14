@@ -36,3 +36,19 @@ class Layer:
         :return:
         """
         return self.weights.dot_product(inputs).ew_add(self.biases).activate(self.activation)
+
+    def evolve(self, parent_a, parent_b, learning_rate):
+        """
+        Evolving Weights and Biases matrices values
+        :param parent_a:
+        :param parent_b:
+        :param learning_rate:
+        :return:
+        """
+        # Evolve Weights
+        self.weights = parent_a.weights.crossover(parent_b.weights).mutation(learning_rate, -1, 1)
+
+        # Evolve Biases
+        self.biases = parent_a.biases.crossover(parent_b.biases).mutation(learning_rate, -1, 1)
+
+        return self
