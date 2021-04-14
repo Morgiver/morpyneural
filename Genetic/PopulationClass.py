@@ -18,6 +18,8 @@ class Population:
             new_element = Element().build(layers_configuration)
             self.elements.append(new_element)
 
+        return self
+
     def feed_forward(self, inputs):
         """
         Feed forwarding all Elements
@@ -43,3 +45,5 @@ class Population:
         for element in self.elements:
             if element != parent_a and element != parent_b:
                 element.evolve(parent_a, parent_b, learning_rate=learning_rate)
+
+        return self
