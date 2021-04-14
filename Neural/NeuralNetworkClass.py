@@ -16,3 +16,14 @@ class NeuralNetwork:
             self.layers.append(new_layer)
 
         return self
+
+    def feed_forward(self, inputs):
+        """
+        Feed forward inputs into the layers and return the predictions
+        :param inputs:
+        :return:
+        """
+        for layer in self.layers:
+            inputs = layer.feed_forward(inputs)
+
+        return inputs
