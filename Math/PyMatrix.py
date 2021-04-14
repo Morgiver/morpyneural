@@ -105,3 +105,16 @@ class Py2DMatrix:
                 new_matrix.values[i, j] = self.values[j, i]
 
         return new_matrix
+
+    def from_array(self, array_values):
+        """
+        Building Matrix from a 1D array
+        :param array_values:
+        :return:
+        """
+        self.rows = len(array_values)
+        self.cols = 1
+        self.build()
+
+        for i in range(len(array_values)):
+            self.values[i, 0] = array_values[i]
