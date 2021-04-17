@@ -1,7 +1,17 @@
 import numpy as np
 import random
-from numba import int32, float32
+from numba import jit, int32, float32
 from numba.experimental import jitclass
+
+
+@jit(float32(float32))
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
+@jit(float32(float32))
+def relu(x):
+    return np.maximum(0, x)
 
 
 spec = [
@@ -79,3 +89,36 @@ class JitMatrix(object):
                     new_matrix.values[i, j] = jit_matrix.values[i, j]
 
         return new_matrix
+
+    def mutation(self, rate=0.001, low=-1, high=1):
+        """
+        For every values, will mutate it if the random value is smaller than the rate.
+        The new value will be a random between low and high.
+        :param rate:
+        :param low:
+        :param high:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if random.random() <= rate:
+                    self.values[i, j] = random.uniform(low, high)
+
+        return self
+
+    def activate(self, fn_name):
+        """
+        Pass every values in an Activation Function
+        :param fn_name:
+        :return:
+        """
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if fn_name == "relu":
+                    self.values[i, j] = relu(self.values[i, j])
+                elif fn_name == "sigmoid":
+                    self.values[i, j] = sigmoid(self.values[i, j])
+                else:
+                    self.values[i, j] = relu(self.values[i, j])
+
+        return self
