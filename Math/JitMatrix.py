@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from numba import jit, int32, float32
+from numba import int32, float32
 from numba.experimental import jitclass
 
 
@@ -18,3 +18,6 @@ class JitMatrix(object):
         self.cols = cols
         self.values = np.zeros((self.rows, self.cols), dtype=np.float32)
 
+    def randomize(self, low, high):
+        self.values = np.random.uniform(low, high, size=(self.rows, self.cols))
+        return self
