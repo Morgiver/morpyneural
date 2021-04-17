@@ -27,10 +27,10 @@ class JitLayer(object):
         :param activation:
         :return:
         """
-        # Weights PyD2Matrix
+        # Weights JitMatrix
         self.weights = JitMatrix(nodes, inputs).randomize(-1, 1)
 
-        # Biases PyD2Matrix
+        # Biases JitMatrix
         self.biases = JitMatrix(nodes, 1).randomize(-1, 1)
 
         # Set Activation
