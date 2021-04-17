@@ -8,7 +8,7 @@ spec = [
 
 
 @jitclass(spec)
-class JitNeuralNetwork:
+class JitNeuralNetwork(object):
     def __init__(self):
         self.layers = []
 

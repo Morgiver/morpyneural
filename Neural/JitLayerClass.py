@@ -10,7 +10,7 @@ spec = [
 
 
 @jitclass(spec)
-class JitLayer:
+class JitLayer(object):
     def __init__(self):
         """
         Layer contain Weights, Biases and Activation data's of a Neural Network
