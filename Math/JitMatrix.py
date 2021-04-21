@@ -29,15 +29,16 @@ class JitMatrix(object):
         self.cols = cols
         self.values = np.zeros((self.rows, self.cols), dtype=np.float32)
 
-    def randomize(self, low, high):
+    def randomize(self, low=-1, high=1):
         """
         Randomize values between low and high
         :param low:
         :param high:
         :return:
         """
-        self.values = np.random.uniform(low, high, size=(self.rows, self.cols))
-        return self
+        for i in range(len(self.rows)):
+            for j in range(len(self.cols)):
+                self.values[i, j] = random.uniform(low, high)
 
     def add(self, value):
         """

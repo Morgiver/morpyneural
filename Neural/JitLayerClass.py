@@ -1,44 +1,32 @@
 import numba
 from numba.experimental import jitclass
-from numba import deferred_type
+from numba import deferred_type, types
 from Math.JitMatrix import JitMatrix, JitMatrixType
 
 
 spec = [
     ('weights', JitMatrixType),
     ('biases', JitMatrixType),
-    ('activation', str)
+    ('activation', types.unicode_type)
 ]
 
 
 @jitclass(spec)
 class JitLayer(object):
-    def __init__(self):
+    def __init__(self, inputs, nodes, activation):
         """
         Layer contain Weights, Biases and Activation data's of a Neural Network
         """
-        self.weights = JitMatrix(1, 1)
-        self.biases = JitMatrix(1, 1)
-        self.activation = "sigmoid"
+        # Weights JitMatrix
+        self.weights = JitMatrix(nodes, inputs)
+        self.weights.randomize(-1, 1)
 
-    def build(self, inputs, nodes, activation):
-        """
-        Building Weights and Biases matrices, define the Activation Function
-        :param inputs:
-        :param nodes:
-        :param activation:
-        :return:
-        """
-        # Weights PyD2Matrix
-        self.weights = JitMatrix(nodes, inputs).randomize(-1, 1)
-
-        # Biases PyD2Matrix
-        self.biases = JitMatrix(nodes, 1).randomize(-1, 1)
+        # Biases JitMatrix
+        self.biases = JitMatrix(nodes, 1)
+        self.biases.randomize(-1, 1)
 
         # Set Activation
         self.activation = activation
-
-        return self
 
     def feed_forward(self, inputs):
         """

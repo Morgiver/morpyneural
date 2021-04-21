@@ -1,28 +1,21 @@
 from numba.experimental import jitclass
-from Neural.JitLayerClass import JitLayer
+from Neural.JitLayerClass import JitLayer, JitLayerListType
 
 
 spec = [
-    ('layers', JitLayer[:])
+    ('layers', JitLayerListType)
 ]
 
 
 @jitclass(spec)
 class JitNeuralNetwork(object):
-    def __init__(self):
-        self.layers = []
+    def __init__(self, layers_config):
+        self.layers = [JitLayer(1, 1, "sigmoid")]
+        self.layers.pop()
 
-    def build(self, layers_config):
-        """
-        Building new Layer Array
-        :param layers_config:
-        :return:
-        """
         for config in layers_config:
-            new_layer = JitLayer().build(config['inputs'], config['nodes'], config['activation'])
-            self.layers.append(new_layer)
-
-        return self
+            new_layer = JitLayer(config['inputs'], config['nodes'], config['activation'])
+            self.layers.insert(len(self.layers), new_layer)
 
     def feed_forward(self, inputs):
         """
