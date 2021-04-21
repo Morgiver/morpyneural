@@ -50,6 +50,7 @@ class JitNeuralNetwork(object):
 
         return self
 
+
 """
 Defining JitNeuralNetworkTypes
 """

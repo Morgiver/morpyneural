@@ -1,5 +1,5 @@
-import numba
-from Neural.JitLayerClass import JitLayer, JitLayerType
+
+from Neural.JitLayerClass import JitLayer
 from Neural.JitNeuralNetworkClass import JitNeuralNetwork
 
 if __name__ == '__main__':
