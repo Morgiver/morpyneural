@@ -53,4 +53,4 @@ Define Customs Types
 """
 JitLayerType = deferred_type()
 JitLayerType.define(JitLayer.class_type.instance_type)
-JitLayerListType = numba.types.unicode_type(JitLayer.class_type.instance_type)
+JitLayerListType = numba.types.List(JitLayer.class_type.instance_type)
