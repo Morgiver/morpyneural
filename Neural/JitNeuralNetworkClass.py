@@ -1,28 +1,26 @@
+import numba
+from numba import deferred_type
 from numba.experimental import jitclass
-from Neural.JitLayerClass import JitLayer
+from Neural.JitLayerClass import JitLayer, JitLayerListType
 
 
-spec = [
-    ('layers', JitLayer[:])
-]
-
-
-@jitclass(spec)
+@jitclass([
+    ('layers', JitLayerListType)
+])
 class JitNeuralNetwork(object):
     def __init__(self):
-        self.layers = []
+        self.layers = [JitLayer(1, 1, "")]
+        self.layers.pop()
 
-    def build(self, layers_config):
+    def add_layer(self, inputs, nodes, activation):
         """
-        Building new Layer Array
-        :param layers_config:
+        Adding a new Layer
+        :param inputs:
+        :param nodes:
+        :param activation:
         :return:
         """
-        for config in layers_config:
-            new_layer = JitLayer().build(config['inputs'], config['nodes'], config['activation'])
-            self.layers.append(new_layer)
-
-        return self
+        self.layers.insert(len(self.layers), JitLayer(nodes, inputs, activation))
 
     def feed_forward(self, inputs):
         """
@@ -47,3 +45,11 @@ class JitNeuralNetwork(object):
             self.layers[i].evolve(parent_a.layers[i], parent_b.layers[i], learning_rate)
 
         return self
+
+
+"""
+Define Customs Types
+"""
+JitNeuralNetworkType = deferred_type()
+JitNeuralNetworkType.define(JitNeuralNetwork.class_type.instance_type)
+JitNeuralNetworkListType = numba.types.unicode_type(JitNeuralNetwork.class_type.instance_type)

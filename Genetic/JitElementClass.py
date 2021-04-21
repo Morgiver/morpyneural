@@ -1,13 +1,13 @@
+import numba
+from numba import deferred_type
 from numba.experimental import jitclass
-from Neural.JitNeuralNetworkClass import JitNeuralNetwork
-
-spec = [
-    ('active', bool),
-    ('neural_network', JitNeuralNetwork)
-]
+from Neural.JitNeuralNetworkClass import JitNeuralNetwork, JitNeuralNetworkType
 
 
-@jitclass(spec)
+@jitclass([
+    ('active', numba.types.boolean),
+    ('neural_network', JitNeuralNetworkType)
+])
 class JitElement:
     def __init__(self):
         """
@@ -49,3 +49,11 @@ class JitElement:
         )
 
         return self
+
+
+"""
+Define Customs Types
+"""
+JitElementType = deferred_type()
+JitElementType.define(JitElement.class_type.instance_type)
+JitElementListType = numba.types.List(JitElement.class_type.instance_type)

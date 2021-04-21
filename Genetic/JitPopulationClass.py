@@ -1,16 +1,17 @@
+import numba
+from numba import deferred_type
 from numba.experimental import jitclass
-from Genetic.JitElementClass import JitElement
+from Genetic.JitElementClass import JitElement, JitElementListType
 from Math.JitMatrix import JitMatrix
 
-spec = [
-    ('elements', JitElement[:])
-]
 
-
-@jitclass(spec)
+@jitclass([
+    ('elements', JitElementListType)
+])
 class JitPopulation(object):
     def __init__(self):
-        self.elements = []
+        self.elements = [JitElement()]
+        self.elements.pop()
 
     def build(self, layers_configuration, max_elements):
         """
@@ -53,3 +54,11 @@ class JitPopulation(object):
                 element.evolve(parent_a, parent_b, learning_rate=learning_rate)
 
         return self
+
+
+"""
+Define Customs Types
+"""
+JitPopulationType = deferred_type()
+JitPopulationType.define(JitPopulation.class_type.instance_type)
+JitPopulationListType = numba.types.List(JitPopulation.class_type.instance_type)

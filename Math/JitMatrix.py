@@ -1,41 +1,53 @@
+import numba
 import numpy as np
 import random
-from numba import jit, int32, float32
+import math
+from numba import int32, float32, deferred_type
 from numba.experimental import jitclass
 
 
-@jit(float32(float32))
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-
-@jit(float32(float32))
-def relu(x):
-    return np.maximum(0, x)
-
-
-spec = [
+@jitclass([
     ('rows', int32),
     ('cols', int32),
     ('values', float32[:, :])
-]
-
-
-@jitclass(spec)
+])
 class JitMatrix(object):
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
         self.values = np.zeros((self.rows, self.cols), dtype=np.float32)
 
-    def randomize(self, low, high):
+    @staticmethod
+    def sigmoid(x):
+        return 1 / (1 + np.exp(-x))
+
+    @staticmethod
+    def relu(x):
+        return np.maximum(0, x)
+
+    @staticmethod
+    def dsigmoid(y):
+        return y * (1 - y)
+
+    @staticmethod
+    def tanh(x):
+        return math.tanh(x)
+
+    @staticmethod
+    def dtanh(x):
+        return 1 / (math.pow(math.cos(x), 2))
+
+    def randomize(self, low=-1, high=1):
         """
         Randomize values between low and high
         :param low:
         :param high:
         :return:
         """
-        self.values = np.random.uniform(low, high, size=(self.rows, self.cols))
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] = random.uniform(low, high)
+
         return self
 
     def add(self, value):
@@ -62,16 +74,28 @@ class JitMatrix(object):
         :param jit_matrix:
         :return:
         """
-        return np.dot(self.values, jit_matrix.values)
+        new_matrix = JitMatrix(self.rows, jit_matrix.cols)
 
-    def from_array(self, array_values):
+        for i in range(new_matrix.rows):
+            for j in range(new_matrix.cols):
+                for k in range(self.cols):
+                    new_matrix.values[i, j] += self.values[i, k] * jit_matrix.values[k, j]
+
+        return new_matrix
+
+    @staticmethod
+    def from_array(array_values):
         """
         Set values from a 1D array values
         :param array_values:
         :return:
         """
-        self.values = array_values.reshape((len(array_values), 1))
-        return self
+        new_matrix = JitMatrix(array_values.size, 1)
+
+        for i in range(array_values.size):
+                new_matrix.values[i, 0] = array_values[i]
+
+        return new_matrix
 
     def crossover(self, jit_matrix):
         """
@@ -114,11 +138,23 @@ class JitMatrix(object):
         """
         for i in range(self.rows):
             for j in range(self.cols):
-                if fn_name == "relu":
-                    self.values[i, j] = relu(self.values[i, j])
-                elif fn_name == "sigmoid":
-                    self.values[i, j] = sigmoid(self.values[i, j])
+                if fn_name == "sigmoid":
+                    self.values[i, j] = self.sigmoid(self.values[i, j])
+                elif fn_name == "dsigmoid":
+                    self.values[i, j] = self.dsigmoid(self.values[i, j])
+                elif fn_name == "tanh":
+                    self.values[i, j] = self.tanh(self.values[i, j])
+                elif fn_name == "dtanh":
+                    self.values[i, j] = self.dtanh(self.values[i, j])
                 else:
-                    self.values[i, j] = relu(self.values[i, j])
+                    self.values[i, j] = self.sigmoid(self.values[i, j])
 
         return self
+
+
+"""
+Define Customs Types
+"""
+JitMatrixType = deferred_type()
+JitMatrixType.define(JitMatrix.class_type.instance_type)
+JitMatrixListType = numba.types.List(JitMatrix.class_type.instance_type, reflected=True)
