@@ -36,8 +36,8 @@ class JitMatrix(object):
         :param high:
         :return:
         """
-        for i in range(len(self.rows)):
-            for j in range(len(self.cols)):
+        for i in range(self.rows):
+            for j in range(self.cols):
                 self.values[i, j] = random.uniform(low, high)
 
     def add(self, value):
