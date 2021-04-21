@@ -1,6 +1,7 @@
 import numpy as np
 import random
-from numba import jit, int32, float32
+import numba
+from numba import jit, int32, float32, deferred_type
 from numba.experimental import jitclass
 
 
@@ -122,3 +123,11 @@ class JitMatrix(object):
                     self.values[i, j] = relu(self.values[i, j])
 
         return self
+
+
+"""
+Defining JitMatrix Types
+"""
+JitMatrixType = deferred_type()
+JitMatrixType.define(JitMatrix.class_type.instance_type)
+JitMatrixListType = numba.types.List(JitMatrix.class_type.instance_type, reflected=True)
