@@ -7,7 +7,7 @@ from Math.JitMatrix import JitMatrix, JitMatrixType
 @jitclass([
     ('weights', JitMatrixType),
     ('biases', JitMatrixType),
-    ('activation', numba.types.unicode_type)
+    ('activation', numba.int32)
 ])
 class JitLayer(object):
     def __init__(self, nodes, inputs, activation):
@@ -29,7 +29,10 @@ class JitLayer(object):
         :param inputs:
         :return:
         """
-        return self.weights.dot_product(inputs).add(self.biases).activate(self.activation)
+        output = self.weights.dot_product(inputs)
+        output = output.add(self.biases)
+        output = output.activate(self.activation)
+        return output
 
     def evolve(self, parent_a, parent_b, learning_rate):
         """

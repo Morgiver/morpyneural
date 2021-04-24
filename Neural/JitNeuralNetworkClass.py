@@ -9,7 +9,7 @@ from Neural.JitLayerClass import JitLayer, JitLayerListType
 ])
 class JitNeuralNetwork(object):
     def __init__(self):
-        self.layers = [JitLayer(1, 1, "")]
+        self.layers = [JitLayer(1, 1, 0)]
         self.layers.pop()
 
     def add_layer(self, inputs, nodes, activation):
@@ -18,9 +18,10 @@ class JitNeuralNetwork(object):
         :param inputs:
         :param nodes:
         :param activation:
-        :return:
+        :return JitNeuralNetwork:
         """
         self.layers.insert(len(self.layers), JitLayer(nodes, inputs, activation))
+        return self
 
     def feed_forward(self, inputs):
         """
@@ -39,7 +40,7 @@ class JitNeuralNetwork(object):
         :param parent_a:
         :param parent_b:
         :param learning_rate:
-        :return:
+        :return JitNeuralNetwork:
         """
         for i in range(len(parent_a.layers)):
             self.layers[i].evolve(parent_a.layers[i], parent_b.layers[i], learning_rate)

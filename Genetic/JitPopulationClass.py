@@ -20,10 +20,9 @@ class JitPopulation(object):
         :param max_elements:
         :return:
         """
-        self.elements.clear()
         for i in range(max_elements):
             new_element = JitElement().build(layers_configuration)
-            self.elements.append(new_element)
+            self.elements.insert(len(self.elements), new_element)
 
         return self
 
@@ -33,8 +32,6 @@ class JitPopulation(object):
         :param inputs:
         :return:
         """
-        inputs = JitMatrix(1, 1).from_array(inputs)
-
         results = []
         for element in self.elements:
             results.append(element.feed_forward(inputs))

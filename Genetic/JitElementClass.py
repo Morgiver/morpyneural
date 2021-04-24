@@ -23,7 +23,9 @@ class JitElement:
         :param layers_configuration:
         :return:
         """
-        self.neural_network.build(layers_configuration)
+        for i in range(len(layers_configuration)):
+            self.neural_network.add_layer(layers_configuration[i][0], layers_configuration[i][1], layers_configuration[i][2])
+
         return self
 
     def feed_forward(self, inputs):

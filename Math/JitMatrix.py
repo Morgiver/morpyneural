@@ -17,6 +17,9 @@ class JitMatrix(object):
         self.cols = cols
         self.values = np.zeros((self.rows, self.cols), dtype=np.float32)
 
+    def set_value(self, x, y, value):
+        self.values[x, y] = value
+
     @staticmethod
     def sigmoid(x):
         return 1 / (1 + np.exp(-x))
@@ -37,6 +40,20 @@ class JitMatrix(object):
     def dtanh(x):
         return 1 / (math.pow(math.cos(x), 2))
 
+    @staticmethod
+    def from_array(array_values):
+        """
+        Set values from a 1D array values
+        :param array_values:
+        :return:
+        """
+        new_matrix = JitMatrix(array_values.size, 1)
+
+        for i in range(array_values.size):
+            new_matrix.set_value(i, 0, array_values[i])
+
+        return new_matrix
+
     def randomize(self, low=-1, high=1):
         """
         Randomize values between low and high
@@ -50,13 +67,16 @@ class JitMatrix(object):
 
         return self
 
-    def add(self, value):
+    def add(self, jit_matrix):
         """
         Addition operation
-        :param value:
+        :param jit_matrix:
         :return:
         """
-        self.values = np.add(self.values, value)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.values[i, j] = self.values[i, j] + jit_matrix.values[i, j]
+
         return self
 
     def multiply(self, value):
@@ -80,20 +100,6 @@ class JitMatrix(object):
             for j in range(new_matrix.cols):
                 for k in range(self.cols):
                     new_matrix.values[i, j] += self.values[i, k] * jit_matrix.values[k, j]
-
-        return new_matrix
-
-    @staticmethod
-    def from_array(array_values):
-        """
-        Set values from a 1D array values
-        :param array_values:
-        :return:
-        """
-        new_matrix = JitMatrix(array_values.size, 1)
-
-        for i in range(array_values.size):
-                new_matrix.values[i, 0] = array_values[i]
 
         return new_matrix
 
@@ -138,13 +144,13 @@ class JitMatrix(object):
         """
         for i in range(self.rows):
             for j in range(self.cols):
-                if fn_name == "sigmoid":
+                if fn_name == 1:
                     self.values[i, j] = self.sigmoid(self.values[i, j])
-                elif fn_name == "dsigmoid":
+                elif fn_name == 2:
                     self.values[i, j] = self.dsigmoid(self.values[i, j])
-                elif fn_name == "tanh":
+                elif fn_name == 3:
                     self.values[i, j] = self.tanh(self.values[i, j])
-                elif fn_name == "dtanh":
+                elif fn_name == 4:
                     self.values[i, j] = self.dtanh(self.values[i, j])
                 else:
                     self.values[i, j] = self.sigmoid(self.values[i, j])
@@ -158,3 +164,7 @@ Define Customs Types
 JitMatrixType = deferred_type()
 JitMatrixType.define(JitMatrix.class_type.instance_type)
 JitMatrixListType = numba.types.List(JitMatrix.class_type.instance_type, reflected=True)
+
+
+#@numba.jit(JitMatrixType(numba.float32[:]), nopython=True)
+
