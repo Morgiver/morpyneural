@@ -20,9 +20,8 @@ setuptools.setup(
         'numba'
     ],
     classifiers=[
-        "Programming Language :: Python :: 3.9",
-        "Licence :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        "Programming Language :: Python :: 3",
+        "License :: MIT License"
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
