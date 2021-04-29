@@ -1,4 +1,4 @@
-from morpyneural.Math.PyMatrix import Py2DMatrix
+from src.morpyneural.Math.PyMatrix import Py2DMatrix
 
 
 class Layer:
