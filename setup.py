@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
     
 setuptools.setup(
-    name="morpyengine",
-    version="0.0.2",
+    name="morpyneural",
+    version="0.0.1",
     author="Morgiver",
     author_email="me@morgiver.net",
     description="A small Neural Network",
