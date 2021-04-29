@@ -1,4 +1,4 @@
-from src.morpyneural.Neural.NeuralNetworkClass import NeuralNetwork
+from morpyneural.Neural.NeuralNetworkClass import NeuralNetwork
 
 
 class Element:

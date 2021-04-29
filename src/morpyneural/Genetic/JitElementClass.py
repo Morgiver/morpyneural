@@ -1,7 +1,7 @@
 import numba
 from numba import deferred_type
 from numba.experimental import jitclass
-from src.morpyneural.Neural.JitNeuralNetworkClass import JitNeuralNetwork, JitNeuralNetworkType
+from morpyneural.Neural.JitNeuralNetworkClass import JitNeuralNetwork, JitNeuralNetworkType
 
 
 @jitclass([
