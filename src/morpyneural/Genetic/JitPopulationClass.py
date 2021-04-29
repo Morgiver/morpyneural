@@ -1,8 +1,8 @@
 import numba
 from numba import deferred_type
 from numba.experimental import jitclass
-from Genetic.JitElementClass import JitElement, JitElementListType
-from Math.JitMatrix import JitMatrix
+from src.morpyneural.Genetic.JitElementClass import JitElement, JitElementListType
+from src.morpyneural.Math.JitMatrix import JitMatrix
 
 
 @jitclass([

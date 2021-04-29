@@ -1,5 +1,5 @@
-from Genetic.ElementClass import Element
-from Math.PyMatrix import Py2DMatrix
+from src.morpyneural.Genetic.ElementClass import Element
+from src.morpyneural.Math.PyMatrix import Py2DMatrix
 
 
 class Population:

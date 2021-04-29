@@ -1,4 +1,4 @@
-from Neural.LayersClass import Layer
+from src.morpyneural.Neural.LayersClass import Layer
 
 
 class NeuralNetwork:

@@ -1,6 +1,6 @@
 # Pycharm folder
 .idea/
-test.py
+examples/simple-neuralnetwork.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
