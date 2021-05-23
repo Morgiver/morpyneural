@@ -36,18 +36,22 @@ class JitElement:
         """
         return self.neural_network.feed_forward(inputs)
 
-    def evolve(self, parent_a, parent_b, learning_rate=0.001):
+    def evolve(self, parent_a, parent_b, learning_rate=0.001, low=-1.0, high=1.0):
         """
         Evolve the neural network
         :param parent_a:
         :param parent_b:
         :param learning_rate:
+        :param low:
+        :param high:
         :return:
         """
         self.neural_network.evolve(
             parent_a.neural_network,
             parent_b.neural_network,
-            learning_rate=learning_rate
+            learning_rate=learning_rate,
+            low=low,
+            high=high
         )
 
         return self

@@ -37,17 +37,19 @@ class JitPopulation(object):
 
         return results
 
-    def evolve(self, parent_a, parent_b, learning_rate=0.001):
+    def evolve(self, parent_a, parent_b, learning_rate=0.001, low=-1.0, high=1.0):
         """
         Evolve each Element
         :param parent_a:
         :param parent_b:
         :param learning_rate:
+        :param low:
+        :param high:
         :return:
         """
         for element in self.elements:
             if element != parent_a and element != parent_b:
-                element.evolve(parent_a, parent_b, learning_rate=learning_rate)
+                element.evolve(parent_a, parent_b, learning_rate=learning_rate, low=low, high=high)
 
         return self
 

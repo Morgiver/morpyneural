@@ -34,16 +34,18 @@ class JitNeuralNetwork(object):
 
         return inputs
 
-    def evolve(self, parent_a, parent_b, learning_rate=0.001):
+    def evolve(self, parent_a, parent_b, learning_rate=0.001, low=-1.0, high=1.0):
         """
         Evolving all layers by crossovering the two parents and mutate the matrices
         :param parent_a:
         :param parent_b:
         :param learning_rate:
+        :param low:
+        :param high:
         :return JitNeuralNetwork:
         """
         for i in range(len(parent_a.layers)):
-            self.layers[i].evolve(parent_a.layers[i], parent_b.layers[i], learning_rate)
+            self.layers[i].evolve(parent_a.layers[i], parent_b.layers[i], learning_rate, low, high)
 
         return self
 

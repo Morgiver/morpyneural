@@ -160,7 +160,7 @@ class Py2DMatrix:
 
         return new_matrix
 
-    def mutation(self, rate=0.001, a=0, b=1):
+    def mutation(self, rate=0.001, a=-1.0, b=1.0):
         """
         For every values, will mutate it if the random value is smaller than the rate.
         The new value will be a random between a and b.
@@ -172,7 +172,7 @@ class Py2DMatrix:
         for i in range(self.rows):
             for j in range(self.cols):
                 if random.random() <= rate:
-                    self.values[i, j] = random.uniform(a, b)
+                    self.values[i, j] += random.gauss(a, b)
 
         return self
 

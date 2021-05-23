@@ -120,7 +120,7 @@ class JitMatrix(object):
 
         return new_matrix
 
-    def mutation(self, rate=0.001, low=-1, high=1):
+    def mutation(self, rate=0.001, low=-1.0, high=1.0):
         """
         For every values, will mutate it if the random value is smaller than the rate.
         The new value will be a random between low and high.
@@ -132,7 +132,7 @@ class JitMatrix(object):
         for i in range(self.rows):
             for j in range(self.cols):
                 if random.random() <= rate:
-                    self.values[i, j] = random.uniform(low, high)
+                    self.values[i, j] += random.gauss(low, high)
 
         return self
 
@@ -164,7 +164,3 @@ Define Customs Types
 JitMatrixType = deferred_type()
 JitMatrixType.define(JitMatrix.class_type.instance_type)
 JitMatrixListType = numba.types.List(JitMatrix.class_type.instance_type, reflected=True)
-
-
-#@numba.jit(JitMatrixType(numba.float32[:]), nopython=True)
-
